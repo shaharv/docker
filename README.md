@@ -1,2 +1,2 @@
 # docker
-Useful Docker images.
+Useful Docker files.
