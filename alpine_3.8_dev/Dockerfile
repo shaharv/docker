@@ -13,12 +13,12 @@ RUN set -ex && \
 		bash bash-completion coreutils file grep openssl openssh nano sudo tar xz \
 	# debug tools
 		gdb musl-dbg strace \
-	# X11 and user utils
-		libxext-dev libxrender-dev libxtst-dev shadow xauth xhost \
-	# Docs and man
+	# docs and man
 		bash-doc man man-pages less less-doc \
 	# GUI fonts
-		font-noto
+		font-noto \
+	# user utils
+		shadow
 
 RUN set -ex && \
 	apk --no-cache --update add \
