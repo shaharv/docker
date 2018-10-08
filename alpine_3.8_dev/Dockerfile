@@ -1,3 +1,8 @@
+# Alpine 3.8 C++/Java Developer Image
+#
+# For IntelliJ and GUI (X11), run the image with:
+# $ XSOCK=/tmp/.X11-unix && sudo docker run -i -v $XSOCK:$XSOCK -e DISPLAY -u developer -t [image-name]
+
 FROM alpine:3.8
 
 ENV LANG C.UTF-8
@@ -32,9 +37,10 @@ RUN set -ex && \
 	rm ideaIC-2018.2.4.tar.gz
 
 # Create a new user with no password
+ENV USERNAME developer
 RUN set -ex && \
-	useradd --create-home --key MAIL_DIR=/dev/null --shell /bin/bash developer && \
-	passwd -d developer
+	useradd --create-home --key MAIL_DIR=/dev/null --shell /bin/bash $USERNAME && \
+	passwd -d $USERNAME
 
 # Set additional environment variables
 ENV JAVA_HOME /usr/lib/jvm/java-1.7-openjdk
