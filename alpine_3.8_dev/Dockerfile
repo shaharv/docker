@@ -16,7 +16,7 @@ RUN set -ex && \
 	# X11 and user utils
 		libxext-dev libxrender-dev libxtst-dev shadow xauth xhost \
 	# Docs and man
-		man man-pages less less-doc \
+		bash-doc man man-pages less less-doc \
 	# GUI fonts
 		font-noto
 
