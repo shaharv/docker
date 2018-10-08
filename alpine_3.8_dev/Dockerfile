@@ -43,6 +43,6 @@ RUN set -ex && \
 	passwd -d $USERNAME
 
 # Set additional environment variables
-ENV JAVA_HOME /usr/lib/jvm/java-1.7-openjdk
-ENV JDK_HOME  /usr/lib/jvm/java-1.7-openjdk
-ENV JAVA_EXE  /usr/lib/jvm/java-1.7-openjdk/bin/java
+ENV JAVA_HOME /usr/lib/jvm/java-1.8-openjdk
+ENV JDK_HOME  /usr/lib/jvm/java-1.8-openjdk
+ENV JAVA_EXE  /usr/lib/jvm/java-1.8-openjdk/bin/java
