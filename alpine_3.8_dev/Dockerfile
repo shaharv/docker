@@ -2,6 +2,9 @@
 #
 # For IntelliJ and GUI (X11), run the image with:
 # $ XSOCK=/tmp/.X11-unix && sudo docker run -i -v $XSOCK:$XSOCK -e DISPLAY -u developer -t [image-name]
+#
+# Then run IntelliJ with:
+# ~/ideaIC-2018.2.4/bin/idea.sh
 
 FROM alpine:3.8
 
