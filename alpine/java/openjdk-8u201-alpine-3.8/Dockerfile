@@ -8,4 +8,4 @@ RUN apk --no-cache add \
 
 # Install OpenJDK packages
 RUN apk --no-cache add \
-	openjdk7 openjdk8 openjdk8-dbg
+	openjdk8=8.201.08-r0 openjdk8-dbg=8.201.08-r0
