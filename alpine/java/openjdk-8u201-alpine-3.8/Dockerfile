@@ -7,5 +7,9 @@ RUN apk --no-cache add \
 	bash coreutils file nano
 
 # Install OpenJDK packages
-RUN apk --no-cache add \
-	openjdk8=8.201.08-r0 openjdk8-dbg=8.201.08-r0
+RUN set -ex && \
+	VER=8.201.08-r0 && \
+	apk --no-cache add \
+		openjdk8=$VER openjdk8-jre-base=$VER openjdk8-jre-lib=$VER openjdk8-jre=$VER openjdk8-dbg=$VER
+
+CMD ["/bin/bash"]
