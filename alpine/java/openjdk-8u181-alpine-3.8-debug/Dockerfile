@@ -22,7 +22,7 @@ RUN set -ex && \
 	wget https://github.com/shaharv/alpine-gdb-builds/releases/download/v0.1/gdb-8.3.50.20190410-git_x86-64_musl.zip && \
 	unzip gdb-8.3.50.20190410-git_x86-64_musl.zip && \
 	cd gdb-8.3.50.20190410-git_x86-64_musl && \
-	cp bin/gdb /usr/bin && \
+	cp -a bin share /usr && \
 	rm -rf /temp
 
 CMD ["/bin/bash"]
