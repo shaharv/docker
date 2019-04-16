@@ -9,7 +9,8 @@ RUN apk --no-cache add \
 # Install OpenJDK packages
 RUN set -ex && \
 	VER=8.181.13-r0 && \
+	REPO=http://dl-cdn.alpinelinux.org/alpine/v3.5/community && \
 	apk --no-cache add \
-		openjdk8=$VER openjdk8-jre-base=$VER openjdk8-jre-lib=$VER openjdk8-jre=$VER openjdk8-dbg=$VER --repository=http://dl-cdn.alpinelinux.org/alpine/v3.5/community
+		openjdk8=$VER openjdk8-jre-base=$VER openjdk8-jre-lib=$VER openjdk8-jre=$VER openjdk8-dbg=$VER --repository=$REPO
 
 CMD ["/bin/bash"]
