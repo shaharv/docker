@@ -16,12 +16,12 @@ RUN set -ex && \
 
 # Install patched gdb for OpenJDK debugging
 RUN set -ex && \
-	apk add --no-cache python2 && \
+	apk add --no-cache gdb python2 && \
 	mkdir -p /temp && cd /temp && \
 	wget https://github.com/shaharv/alpine-gdb-builds/releases/download/v0.1/gdb-8.3.50.20190410-git_x86-64_musl.zip && \
 	unzip gdb-8.3.50.20190410-git_x86-64_musl.zip && \
 	cd gdb-8.3.50.20190410-git_x86-64_musl && \
-	cp -a bin share /usr/local && \
+	cp bin/gdb /usr/bin && \
 	rm -rf /temp
 
 CMD ["/bin/bash"]
