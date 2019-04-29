@@ -4,7 +4,7 @@
 # $ XSOCK=/tmp/.X11-unix && sudo docker run -i -v $XSOCK:$XSOCK -e DISPLAY -u developer -t [image-name]
 #
 # Then run IntelliJ with:
-# ~/ideaIC-2018.2.4/bin/idea.sh
+# /idea-IC-191.6707.61/bin/idea.sh
 
 FROM alpine:3.8
 
@@ -35,9 +35,9 @@ RUN set -ex && \
 
 # Install IntelliJ Community
 RUN set -ex && \
-	wget https://download-cf.jetbrains.com/idea/ideaIC-2018.2.4.tar.gz && \
-	tar -xf ideaIC-2018.2.4.tar.gz && \
-	rm ideaIC-2018.2.4.tar.gz
+	wget https://download-cf.jetbrains.com/idea/ideaIC-2019.1.1-no-jbr.tar.gz && \
+	tar -xf ideaIC-2019.1.1-no-jbr.tar.gz && \
+	rm ideaIC-2019.1.1-no-jbr.tar.gz
 
 # Create a new user with no password
 ENV USERNAME developer
