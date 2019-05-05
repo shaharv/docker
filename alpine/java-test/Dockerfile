@@ -11,7 +11,7 @@ ENV LANG C.UTF-8
 
 # Install useful packages
 RUN apk --no-cache add \
-	bash coreutils file grep nano sudo tar unzip
+	bash binutils coreutils file grep nano strace sudo tar unzip
 
 # Install latest OpenJDK 8 (8.212.04-r0 as of 5/5/19)
 RUN apk --no-cache add openjdk8
