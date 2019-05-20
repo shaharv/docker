@@ -1,4 +1,4 @@
-# Building the image: 'docker image build --squash -t java-test-all'
+# Building the image: 'docker image build --squash -t java-test-all'.
 #
 # Using the image:
 # - For gdb debugging, start docker with '--cap-add=SYS_PTRACE --security-opt seccomp=unconfined'.
@@ -21,6 +21,12 @@ RUN apk --no-cache add gradle
 
 # Install OpenJDK 7
 RUN apk --no-cache add openjdk7
+
+# Install OpenJDK 9
+RUN apk add openjdk9 --repository=http://dl-cdn.alpinelinux.org/alpine/edge/testing
+
+# Install OpenJDK 10
+RUN apk add openjdk9 --repository=http://dl-cdn.alpinelinux.org/alpine/edge/testing
 
 # Install patched gdb for OpenJDK debugging
 RUN set -ex && \
