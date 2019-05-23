@@ -1,3 +1,5 @@
+# The all-in-one Java testing docker.
+#
 # Building the image: 'docker image build --squash -t java-test-all'.
 #
 # Using the image:
@@ -23,10 +25,10 @@ RUN apk --no-cache add gradle
 RUN apk --no-cache add openjdk7
 
 # Install OpenJDK 9
-RUN apk add openjdk9 --repository=http://dl-cdn.alpinelinux.org/alpine/edge/testing
+RUN apk --no-cache add openjdk9 --repository=http://dl-cdn.alpinelinux.org/alpine/edge/testing
 
 # Install OpenJDK 10
-RUN apk add openjdk9 --repository=http://dl-cdn.alpinelinux.org/alpine/edge/testing
+RUN apk --no-cache add openjdk9 --repository=http://dl-cdn.alpinelinux.org/alpine/edge/testing
 
 # Install patched gdb for OpenJDK debugging
 RUN set -ex && \
