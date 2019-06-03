@@ -30,6 +30,9 @@ RUN apk --no-cache add openjdk9 --repository=http://dl-cdn.alpinelinux.org/alpin
 # Install OpenJDK 10
 RUN apk --no-cache add openjdk10 --repository=http://dl-cdn.alpinelinux.org/alpine/edge/testing
 
+# Install OpenJDK 11
+RUN apk --no-cache add openjdk11 --repository=http://dl-cdn.alpinelinux.org/alpine/edge/testing
+
 # Install patched gdb for OpenJDK debugging
 RUN set -ex && \
 	apk add --no-cache gdb python2 && \
