@@ -24,14 +24,8 @@ RUN apk --no-cache add gradle
 # Install OpenJDK 7
 RUN apk --no-cache add openjdk7
 
-# Install OpenJDK 9
-RUN apk --no-cache add openjdk9 --repository=http://dl-cdn.alpinelinux.org/alpine/edge/testing
-
-# Install OpenJDK 10
-RUN apk --no-cache add openjdk10 --repository=http://dl-cdn.alpinelinux.org/alpine/edge/testing
-
-# Install OpenJDK 11
-RUN apk --no-cache add openjdk11 --repository=http://dl-cdn.alpinelinux.org/alpine/edge/testing
+# Install OpenJDK 9, 10 and 11
+RUN apk --no-cache add openjdk9 openjdk10 openjdk11 --repository=http://dl-cdn.alpinelinux.org/alpine/edge/community
 
 # Install patched gdb for OpenJDK debugging
 RUN set -ex && \
