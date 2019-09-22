@@ -9,9 +9,9 @@ ENV LANG C.UTF-8
 
 # Install useful packages
 RUN apk --no-cache add \
-	bash binutils coreutils file grep nano strace sudo tar unzip
+	bash binutils coreutils file grep nano procps strace sudo tar unzip
 
-# Install latest OpenJDK 8 (8.222.10-r1 as of 12/8/19)
+# Install packaged OpenJDK 8
 RUN apk --no-cache add openjdk8
 
 # Install gradle
