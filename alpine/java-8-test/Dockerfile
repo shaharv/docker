@@ -3,7 +3,7 @@
 # Building the image: 'docker image build --squash -t java-test-8 .'.
 #
 
-FROM alpine:3.10
+FROM alpine:3.11
 
 ENV LANG C.UTF-8
 
