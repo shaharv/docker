@@ -2,6 +2,10 @@
 #
 # Building the image: 'docker image build --squash -t java-test-8 .'.
 #
+# Using the image:
+# - For gdb debugging, start docker with '--cap-add=SYS_PTRACE --security-opt seccomp=unconfined'.
+# - For exposing all ports, add '--network="host'.
+#
 
 FROM alpine:3.11
 
