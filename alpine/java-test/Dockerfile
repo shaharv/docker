@@ -1,13 +1,13 @@
 # The all-in-one Java testing docker.
 #
-# Building the image: 'docker image build --squash -t java-test-all'.
+# Building the image: 'docker image build --squash -t java-test-all .'.
 #
 # Using the image:
 # - For gdb debugging, start docker with '--cap-add=SYS_PTRACE --security-opt seccomp=unconfined'.
 # - For exposing all ports, add '--network="host'.
 #
 
-FROM alpine:3.9
+FROM alpine:3.11
 
 ENV LANG C.UTF-8
 
@@ -15,17 +15,25 @@ ENV LANG C.UTF-8
 RUN apk --no-cache add \
 	bash binutils coreutils file grep nano procps strace sudo tar unzip
 
-# Install packaged OpenJDK 8
-RUN apk --no-cache add openjdk8
+# Install packaged OpenJDK builds with debug symbols
+RUN apk --no-cache add \
+	openjdk7 \
+	openjdk8 \
+	openjdk8-dbg \
+	openjdk9 \
+	openjdk9-dbg \
+	openjdk10 \
+	openjdk10-dbg \
+	openjdk11 \
+	openjdk11-dbg
+
+# Install experimental OpenJDK builds from edge
+RUN apk --no-cache --repository=http://dl-cdn.alpinelinux.org/alpine/edge/testing add \
+	openjdk12 \
+	openjdk12-dbg
 
 # Install gradle
 RUN apk --no-cache add gradle
-
-# Install OpenJDK 7
-RUN apk --no-cache add openjdk7
-
-# Install OpenJDK 9, 10 and 11
-RUN apk --no-cache add openjdk9 openjdk10 openjdk11 --repository=http://dl-cdn.alpinelinux.org/alpine/edge/community
 
 # Install patched gdb for OpenJDK debugging
 RUN set -ex && \
@@ -37,21 +45,10 @@ RUN set -ex && \
 	cp -a bin share /usr && \
 	rm -rf /temp
 
-# Download OpenJDK 8 versions
-RUN set -ex && \
-	cd /usr/lib/jvm && \
-        for JAVA_VER in 8.131.11-r2 8.151.12-r0 8.171.11-r0 8.181.13-r0 8.191.12-r0 8.201.08-r0 8.201.08-r1 8.212.04-r0 8.222.10-r1; \
-	do \
-		ZIP_NAME=java-1.8-openjdk-$JAVA_VER.tar.gz && \
-		wget https://github.com/shaharv/alpine-openjdk-builds/releases/download/1.8/$ZIP_NAME && \
-		tar -xf $ZIP_NAME && \
-		rm $ZIP_NAME; \
-	done
-
 # Download Azul Zulu OpenJDK 11
 RUN set -ex && \
 	cd /usr/lib/jvm && \
-	ZIP_NAME=zulu11.31.11-ca-jdk11.0.3-linux_musl_x64.tar.gz && \
+	ZIP_NAME=zulu11.37.17-ca-jdk11.0.6-linux_musl_x64.tar.gz && \
 	wget https://cdn.azul.com/zulu/bin/$ZIP_NAME && \
 	tar -xf $ZIP_NAME && \
 	rm $ZIP_NAME
