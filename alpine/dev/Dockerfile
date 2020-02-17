@@ -1,14 +1,12 @@
-# Alpine 3.8 C++/Java Developer Image
+# Alpine 3.11 C++/Java Developer Image
 #
 # For IntelliJ and GUI (X11), run the image with:
 # $ XSOCK=/tmp/.X11-unix && sudo docker run -i -v $XSOCK:$XSOCK -e DISPLAY -u developer -t [image-name]
 #
 # Then run IntelliJ with:
-# /idea-IC-191.6707.61/bin/idea.sh
+# /idea-IC-193.6494.35/bin/idea.sh
 
-FROM alpine:3.8
-
-ENV LANG C.UTF-8
+FROM alpine:3.11
 
 RUN set -ex && \
 	apk --no-cache --update add \
@@ -31,13 +29,13 @@ RUN set -ex && \
 RUN set -ex && \
 	apk --no-cache --update add \
 	# Java tools
-		gradle openjdk8 openjdk8-dbg
+		gradle openjdk8
 
 # Install IntelliJ Community
 RUN set -ex && \
-	wget https://download-cf.jetbrains.com/idea/ideaIC-2019.1.1-no-jbr.tar.gz && \
-	tar -xf ideaIC-2019.1.1-no-jbr.tar.gz && \
-	rm ideaIC-2019.1.1-no-jbr.tar.gz
+	wget https://download-cf.jetbrains.com/idea/ideaIC-2019.3.3-no-jbr.tar.gz && \
+	tar -xf ideaIC-2019.3.3-no-jbr.tar.gz && \
+	rm ideaIC-2019.3.3-no-jbr.tar.gz
 
 # Create a new user with no password
 ENV USERNAME developer
