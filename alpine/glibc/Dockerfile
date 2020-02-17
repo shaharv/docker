@@ -1,13 +1,13 @@
 # Credit: https://github.com/anapsix/docker-alpine-java
 
-FROM alpine:3.8
+FROM alpine:3.11
 
 ENV LANG en_US.UTF-8
 ENV LANGUAGE en_US:en
 ENV LC_ALL en_US.UTF-8
 
 ENV GLIBC_REPO=https://github.com/sgerrand/alpine-pkg-glibc
-ENV GLIBC_VERSION=2.28-r0
+ENV GLIBC_VERSION=2.30-r0
 
 RUN set -ex && \
     apk --update add libstdc++ curl ca-certificates && \
