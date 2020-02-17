@@ -15,7 +15,7 @@ RUN set -ex && \
 	# basic packages
 		bash bash-completion coreutils file grep openssl openssh nano sudo tar xz \
 	# debug tools
-		gdb musl-dbg strace \
+		binutils gdb musl-dbg strace \
 	# docs and man
 		bash-doc man man-pages less less-doc \
 	# GUI fonts
