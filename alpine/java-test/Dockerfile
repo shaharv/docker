@@ -9,8 +9,6 @@
 
 FROM alpine:3.11
 
-ENV LANG C.UTF-8
-
 # Install useful packages
 RUN apk --no-cache add \
 	bash binutils coreutils file grep nano procps strace sudo tar unzip
