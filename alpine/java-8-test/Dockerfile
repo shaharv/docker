@@ -11,7 +11,7 @@ FROM alpine:3.11
 
 # Install useful packages
 RUN apk --no-cache add \
-	bash binutils coreutils file grep nano procps strace sudo tar unzip
+	bash binutils coreutils file grep nano procps sudo tar unzip
 
 # Install packaged OpenJDK 8 (8.242.08-r0)
 RUN apk --no-cache add openjdk8
