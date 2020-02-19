@@ -1,6 +1,6 @@
 # Java 8 testing docker image.
 #
-# Building the image: 'docker image build --squash -t java-test-8 .'.
+# Building the image: 'docker image build --squash -t java-8-test .'.
 #
 # Using the image:
 # - For gdb debugging, start docker with '--cap-add=SYS_PTRACE --security-opt seccomp=unconfined'.
