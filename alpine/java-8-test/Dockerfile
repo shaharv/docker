@@ -30,8 +30,4 @@ RUN set -ex && \
 		rm $ZIP_NAME; \
 	done
 
-# OverOps env.
-ENV TAKIPI_COLLECTOR_HOST=localhost
-ENV TAKIPI_COLLECTOR_PORT=6060
-
 CMD ["/bin/bash"]
