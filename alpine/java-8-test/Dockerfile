@@ -3,7 +3,8 @@
 # Building the image: 'docker image build --squash -t java-8-test .'.
 #
 # Using the image:
-# - For gdb debugging, start docker with '--cap-add=SYS_PTRACE --security-opt seccomp=unconfined'.
+# - For debugging, install the gdb and strace packages.
+#   Start docker with '--cap-add=SYS_PTRACE --security-opt seccomp=unconfined'.
 # - For exposing all ports, add '--network="host'.
 #
 
