@@ -43,6 +43,14 @@ RUN set -ex && \
 	useradd --create-home --key MAIL_DIR=/dev/null --shell /bin/bash $USERNAME && \
 	passwd -d $USERNAME
 
+# Set timezone (default = UTC)
+ENV TZ US/Eastern
+RUN set -ex && \
+	apk add tzdata && \
+	cp /usr/share/zoneinfo/$TZ /etc/localtime && \
+	echo "$TZ" > /etc/timezone && \
+	date
+
 # Set additional environment variables
 ENV JAVA_HOME /usr/lib/jvm/java-1.8-openjdk
 ENV JDK_HOME  /usr/lib/jvm/java-1.8-openjdk
