@@ -19,7 +19,7 @@ RUN pip3 install --upgrade pip && \
 #
 RUN git clone --recursive https://github.com/Microsoft/onnxruntime
 
-# Build onnxruntime. Tests are disabled in this phase to prevent failing tests for failing the entire build.
+# Build onnxruntime. Tests are disabled in this phase to prevent failing tests from failing the entire build.
 #
 RUN cd /onnxruntime && ./build.sh --config Release --parallel --build_wheel --skip_tests --cmake_extra_defines CMAKE_CXX_FLAGS=-Wno-deprecated-copy
 
