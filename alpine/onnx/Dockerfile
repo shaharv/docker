@@ -13,13 +13,13 @@ RUN apk add --no-cache \
 # Install python modules
 #
 RUN pip3 install --upgrade pip && \
-    pip3 install numpy
+    pip3 install numpy wheel
 
 # Clone onnxruntime
 #
 RUN git clone --recursive https://github.com/Microsoft/onnxruntime
 
-# Build and test onnxruntime
+# Build onnxruntime
 #
-RUN cd /onnxruntime && ./build.sh --config Release --parallel --build_wheel --cmake_extra_defines CMAKE_CXX_FLAGS=-Wno-deprecated-copy
+RUN cd /onnxruntime && ./build.sh --config Release --parallel --build_wheel --skip_tests --cmake_extra_defines CMAKE_CXX_FLAGS=-Wno-deprecated-copy
 
