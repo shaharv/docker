@@ -55,7 +55,7 @@ RUN cd /onnxruntime && \
 #
 RUN set -ex && \
     cd /onnxruntime && \
-    rm onnxruntime/test/providers/cpu/nn/string_normalizer_test.cc
+    rm onnxruntime/test/providers/cpu/nn/string_normalizer_test.cc && \
     find -name "test_strnormalizer*" -or -name "test_strnorm_model" -delete
 
 # Build and test onnxruntime
