@@ -23,7 +23,7 @@ RUN ln -s /usr/bin/python3 /usr/bin/python
 # Install python modules
 #
 RUN pip3 install --upgrade pip && \
-    pip3 install cython numpy pybind11 wheel
+    pip3 install cython numpy pybind11 pytest wheel
 
 # Install pre-3.11 protobuf for onnx, due to https://github.com/onnx/onnx/issues/2481
 #
@@ -50,10 +50,13 @@ RUN cd /onnxruntime && \
     git fetch && \
     git checkout b40a85a0e8f89928b965a5ed5e90e158cd642355 -- tools/ci_build/build.py
 
-# Remove Alpine failing test ContribOpTest.StringNormalizerTest, unsupported due to
-# missing musl locale functionality
+# Remove all StringNormalizer tests, all of which are failing on Alpine due to
+# partial musl locale functionality
 #
-RUN rm /onnxruntime/onnxruntime/test/providers/cpu/nn/string_normalizer_test.cc
+RUN set -ex && \
+    cd /onnxruntime && \
+    rm onnxruntime/test/providers/cpu/nn/string_normalizer_test.cc
+    find -name "test_strnormalizer*" -or -name "test_strnorm_model" -delete
 
 # Build and test onnxruntime
 #
