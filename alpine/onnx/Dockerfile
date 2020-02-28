@@ -1,6 +1,10 @@
-FROM alpine:3.11 AS Builder
+# onnxruntime Alpine Linux docker image.
+#
+# Building the image: 'docker image build --squash -t onnx-alpine .'.
+#
+# For specifying onnxruntime version to build, modify the ONNXRUNTIME_TAG variable.
 
-ENV ONNXRUNTIME_TAG v1.1.2
+FROM alpine:3.11 AS Builder
 
 # Install build tools
 #
@@ -36,7 +40,15 @@ RUN pip3 install onnx onnxmltools
 
 # Clone onnxruntime
 #
-RUN git clone --branch $ONNXRUNTIME_TAG --recursive https://github.com/Microsoft/onnxruntime
+ENV ONNXRUNTIME_TAG v1.1.1
+RUN set -ex && \
+    git clone --branch $ONNXRUNTIME_TAG --recursive https://github.com/Microsoft/onnxruntime
+
+# Patch build.py for Python 3.8: https://github.com/microsoft/onnxruntime/issues/2664
+#
+RUN cd /onnxruntime && \
+    git fetch && \
+    git checkout b40a85a0e8f89928b965a5ed5e90e158cd642355 -- tools/ci_build/build.py
 
 # Remove Alpine failing test ContribOpTest.StringNormalizerTest, unsupported due to
 # missing musl locale functionality
