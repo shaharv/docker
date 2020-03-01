@@ -16,4 +16,7 @@ RUN apk --no-cache add gdb strace
 # Convinience packages
 RUN apk --no-cache add bash nano
 
+# Upgrade pip
+RUN pip3 install --upgrade pip
+
 CMD ["/bin/bash"]
