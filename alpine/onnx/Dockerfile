@@ -51,12 +51,11 @@ RUN cd /onnxruntime && \
     git checkout b40a85a0e8f89928b965a5ed5e90e158cd642355 -- tools/ci_build/build.py
 
 # Remove all StringNormalizer tests, all of which are failing on Alpine due to
-# partial musl locale functionality
+# musl locale feature parity vs. glibc
 #
 RUN set -ex && \
-    cd /onnxruntime && \
-    rm onnxruntime/test/providers/cpu/nn/string_normalizer_test.cc && \
-    find -name "test_strnormalizer*" -or -name "test_strnorm_model" -delete
+    rm /onnxruntime/onnxruntime/test/providers/cpu/nn/string_normalizer_test.cc && \
+    sed "s/    return filters/    filters += \[\'^test_strnorm.*\'\]\n    return filters/" -i /onnxruntime/onnxruntime/test/python/onnx_backend_test_series.py
 
 # Build and test onnxruntime
 #
