@@ -57,7 +57,9 @@ RUN set -ex && \
     rm /onnxruntime/onnxruntime/test/providers/cpu/nn/string_normalizer_test.cc && \
     sed "s/    return filters/    filters += \[\'^test_strnorm.*\'\]\n    return filters/" -i /onnxruntime/onnxruntime/test/python/onnx_backend_test_series.py
 
-# Build and test onnxruntime
+# Build and test onnxruntime.
+# Add -Wno-deprecated-copy to build flag for suppressing deprecation warnings (eigen, proto)
+# resulting with build failure.
 #
 RUN cd /onnxruntime && ./build.sh --config Release --parallel --build_wheel --cmake_extra_defines CMAKE_CXX_FLAGS=-Wno-deprecated-copy
 
