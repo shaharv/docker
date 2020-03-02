@@ -1,10 +1,11 @@
 # onnxruntime Alpine Linux docker image.
 #
-# Building the image: 'docker image build --squash -t onnx-alpine .'.
+# Building the image: 'docker image build --squash -t onnxruntime-alpine .'.
 #
-# For specifying onnxruntime version to build, modify the ONNXRUNTIME_TAG variable.
+# For specifying onnxruntime version to build, set the ONNXRUNTIME_TAG variable accordingly.
+#
 
-FROM alpine:3.11 AS Builder
+FROM alpine:3.11 AS onnxruntime-builder
 
 # Install build tools
 #
