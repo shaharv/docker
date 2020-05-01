@@ -7,6 +7,8 @@
 #   Start docker with '--cap-add=SYS_PTRACE --security-opt seccomp=unconfined'.
 # - For exposing all ports, add '--network="host'.
 #
+# The image is available on Dockerhub: https://hub.docker.com/r/shaharv/alpine-java-8-builds
+#
 
 FROM alpine:3.11
 
