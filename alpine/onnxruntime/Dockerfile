@@ -59,8 +59,13 @@ RUN set -ex && \
     sed "s/    return filters/    filters += \[\'^test_strnorm.*\'\]\n    return filters/" -i /onnxruntime/onnxruntime/test/python/onnx_backend_test_series.py
 
 # Build and test onnxruntime.
-# Add -Wno-deprecated-copy to build flag for suppressing deprecation warnings (eigen, proto)
-# resulting with build failure.
+# Add -Wno-deprecated-copy to build flag for suppressing deprecation warnings
+# (eigen, proto) resulting with build failure.
+#
+RUN cd /onnxruntime && ./build.sh --config Release --parallel --build_wheel --enable_pybind --cmake_extra_defines CMAKE_CXX_FLAGS=-Wno-deprecated-copy --skip_tests
+
+# Run again, with tests this time.
+# This is done for seperating the build and test phases, for not failing the
+# entire build if a test fails.
 #
 RUN cd /onnxruntime && ./build.sh --config Release --parallel --build_wheel --enable_pybind --cmake_extra_defines CMAKE_CXX_FLAGS=-Wno-deprecated-copy
-
