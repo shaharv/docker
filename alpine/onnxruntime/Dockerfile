@@ -62,5 +62,5 @@ RUN set -ex && \
 # Add -Wno-deprecated-copy to build flag for suppressing deprecation warnings (eigen, proto)
 # resulting with build failure.
 #
-RUN cd /onnxruntime && ./build.sh --config Release --parallel --build_wheel --cmake_extra_defines CMAKE_CXX_FLAGS=-Wno-deprecated-copy
+RUN cd /onnxruntime && ./build.sh --config Release --parallel --build_wheel --enable_pybind --cmake_extra_defines CMAKE_CXX_FLAGS=-Wno-deprecated-copy
 
