@@ -32,3 +32,7 @@ COPY --from=builder /usr/local/include/llvm-c    /usr/local/include/
 COPY --from=builder /usr/local/lib/*LLVM*        /usr/local/lib/
 COPY --from=builder /usr/local/lib/*clang*       /usr/local/lib/
 COPY --from=builder /usr/local/share/clang/      /usr/local/share/
+
+# Install required packages
+RUN apk update && \
+    apk add libstdc++ musl-dev
