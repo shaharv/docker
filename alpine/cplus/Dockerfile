@@ -5,13 +5,13 @@
 # - For exposing all ports, add '--network="host'.
 #
 
-FROM alpine:3.11
+FROM alpine:3.13
 
 # Build tools
 RUN apk --no-cache add cmake g++ linux-headers make
 
 # Debug tools
-RUN apk --no-cache add gdb strace
+RUN apk --no-cache add gdb strace py3-pip
 
 # Convinience packages
 RUN apk --no-cache add bash nano
