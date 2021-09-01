@@ -1,4 +1,4 @@
-FROM alpine:3.11
+FROM alpine:3.14
 
 # Set up glibc
 #
@@ -6,7 +6,7 @@ ENV LANG en_US.UTF-8
 ENV LANGUAGE en_US:en
 ENV LC_ALL en_US.UTF-8
 ENV GLIBC_REPO=https://github.com/sgerrand/alpine-pkg-glibc
-ENV GLIBC_VERSION=2.30-r0
+ENV GLIBC_VERSION=2.34-r0
 RUN set -ex && \
     apk --update add libstdc++ curl ca-certificates && \
     for pkg in glibc-${GLIBC_VERSION} glibc-bin-${GLIBC_VERSION}; \
@@ -18,7 +18,7 @@ RUN set -ex && \
 # Install prerequisites
 #
 RUN apk add --no-cache \
-	bash dpkg
+	bash binutils
 
 # Download and unpack Chrome
 RUN set -ex && \
@@ -38,6 +38,7 @@ RUN apk add --no-cache \
 	expat \
 	glib \
 	gtk+3.0 \
+	libdrm \
 	libx11 \
 	libxcomposite \
 	libxcursor \
@@ -46,7 +47,9 @@ RUN apk add --no-cache \
 	libxi \
 	libxrandr \
 	libxscrnsaver \
+	libxshmfence \
 	libxtst \
+	mesa-gbm \
 	nss \
 	pango
 
