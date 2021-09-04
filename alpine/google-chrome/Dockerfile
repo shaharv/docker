@@ -1,7 +1,9 @@
+# For running the image:
+# sudo docker run -it -v $XSOCK:/tmp/.X11-unix -v $XAUTHORITY:/root/.Xauthority -e DISPLAY [image-name]
+
 FROM alpine:3.14
 
 # Set up glibc
-#
 ENV LANG en_US.UTF-8
 ENV LANGUAGE en_US:en
 ENV LC_ALL en_US.UTF-8
@@ -15,10 +17,9 @@ RUN set -ex && \
     rm -v /tmp/*.apk && \
     /usr/glibc-compat/sbin/ldconfig /lib /usr/glibc-compat/lib
 
-# Install prerequisites
-#
+# Install prerequisites and helper packages
 RUN apk add --no-cache \
-	bash binutils
+	bash dpkg xeyes
 
 # Download and unpack Chrome
 RUN set -ex && \
@@ -31,7 +32,7 @@ RUN set -ex && \
 	rm -r /google-chrome-stable
 
 # Install Chrome dependencies
-RUN apk add --no-cache \
+RUN apk add --no-cache --update \
 	alsa-lib \
 	atk \
 	at-spi2-atk \
@@ -52,4 +53,3 @@ RUN apk add --no-cache \
 	mesa-gbm \
 	nss \
 	pango
-
