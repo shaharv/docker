@@ -1,5 +1,13 @@
-# For running the image:
-# sudo docker run -it -v $XSOCK:/tmp/.X11-unix -v $XAUTHORITY:/root/.Xauthority -e DISPLAY [image-name]
+# For starting the image:
+# sudo docker run -it --network=host -v $XSOCK:/tmp/.X11-unix -v $XAUTHORITY:/root/.Xauthority -e DISPLAY [image-name]
+#
+# Debug:
+# - Add '--cap-add=SYS_PTRACE --security-opt seccomp=unconfined' for gdb and strace.
+# - Debug crash before main: LD_DEBUG=all /opt/google/chrome/chrome
+# - Debug chrome: gdb /opt/google/chrome/chrome
+# - $gdb set disable-randomization on
+#   $info file
+#   b *<entry point>
 
 FROM alpine:3.14
 
