@@ -22,6 +22,6 @@ RUN apt install -y --no-install-recommends software-properties-common
 RUN apt install -y wget gnupg
 RUN wget -O - https://apt.llvm.org/llvm-snapshot.gpg.key | apt-key add -
 RUN add-apt-repository 'deb http://apt.llvm.org/focal/ llvm-toolchain-focal-15 main' && apt update
-RUN apt install -y clang-15
+RUN apt install -y clang-15 clang-format-15 clang-tidy-15
 
 CMD ["/bin/bash"]
