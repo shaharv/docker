@@ -3,7 +3,8 @@
 
 FROM ubuntu:20.04
 
-RUN apt update 
+# Install basic packages
+RUN apt update && apt install -y coreutils gnupg nano wget
 
 # Install CMake (13.6.3)
 RUN apt install -y cmake
@@ -24,10 +25,9 @@ RUN apt install -y gcc-10 g++-10
 RUN apt install -y clang-12
 
 # Install Clang 15 (15.0.2)
-RUN apt install -y software-properties-common
-RUN apt install -y wget gnupg
 RUN wget -O - https://apt.llvm.org/llvm-snapshot.gpg.key | apt-key add -
-RUN add-apt-repository 'deb http://apt.llvm.org/focal/ llvm-toolchain-focal-15 main' && apt update
-RUN apt install -y clang-15 clang-format-15 clang-tidy-15
+RUN echo 'deb http://apt.llvm.org/focal/ llvm-toolchain-focal-15 main' | tee -a /etc/apt/sources.list
+RUN apt update && apt install -y clang-15 clang-format-15 clang-tidy-15
+RUN update-alternatives --install /usr/bin/clang-format clang-format /usr/bin/clang-format-15 1500
 
 CMD ["/bin/bash"]
