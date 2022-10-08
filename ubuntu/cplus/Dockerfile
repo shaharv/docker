@@ -1,5 +1,5 @@
 # Ubuntu 20.04 C++ build docker image with
-# CMake, GNU make, GCC 10, Clang 12 and Clang 15.
+# CMake, GNU make, GCC 10, Clang 12, Clang 15, Python 3.8, IWYU and git.
 
 FROM ubuntu:20.04
 
@@ -29,5 +29,19 @@ RUN wget -O - https://apt.llvm.org/llvm-snapshot.gpg.key | apt-key add -
 RUN echo 'deb http://apt.llvm.org/focal/ llvm-toolchain-focal-15 main' | tee -a /etc/apt/sources.list
 RUN apt update && apt install -y clang-15 clang-format-15 clang-tidy-15
 RUN update-alternatives --install /usr/bin/clang-format clang-format /usr/bin/clang-format-15 1500
+
+# Install git
+RUN apt install -y git
+
+# Install include-what-you-use 0.16 (compatible with Clang 12)
+RUN apt install -y libclang-12-dev && \
+    ln -s /usr/bin/python3 /usr/bin/python && \
+    git clone https://github.com/include-what-you-use/include-what-you-use.git /iwyu/iwyu && \
+    cd /iwyu/iwyu && \
+    git checkout clang_12 && \
+    cd .. && \
+    mkdir build && cd build && \
+    cmake -DIWYU_LLVM_ROOT_PATH=/usr/lib/llvm-12 ../iwyu && \
+    make -j install
 
 CMD ["/bin/bash"]
