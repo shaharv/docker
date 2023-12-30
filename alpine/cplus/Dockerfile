@@ -5,7 +5,7 @@
 # - For exposing all ports, add '--network="host'.
 #
 
-FROM alpine:3.13
+FROM alpine:3.19
 
 # Build tools
 RUN apk --no-cache add cmake g++ linux-headers make
@@ -15,8 +15,5 @@ RUN apk --no-cache add gdb strace py3-pip
 
 # Convinience packages
 RUN apk --no-cache add bash nano
-
-# Upgrade pip
-RUN pip3 install --upgrade pip
 
 CMD ["/bin/bash"]
