@@ -1,12 +1,12 @@
-# Alpine 3.13 C++/Java Developer Image
+# Alpine 3.22 C++/Java Developer Image
 #
 # For IntelliJ and GUI (X11), run the image with:
 # $ XSOCK=/tmp/.X11-unix && sudo docker run -i -v $XSOCK:$XSOCK -e DISPLAY -u developer -t [image-name]
 #
 # Then run IntelliJ with:
-# /idea-IC-193.6494.35/bin/idea.sh
+# /idea-IC-252.23892.409/bin/idea.sh
 
-FROM alpine:3.13
+FROM alpine:3.22
 
 RUN set -ex && \
 	apk --no-cache --update add \
@@ -24,18 +24,18 @@ RUN set -ex && \
 RUN set -ex && \
 	apk --no-cache --update add \
 	# C++ build tools
-		cmake g++ git linux-headers libpthread-stubs make
+		cmake g++ git linux-headers make
 
 RUN set -ex && \
 	apk --no-cache --update add \
 	# Java tools
-		gradle openjdk8
+		gradle openjdk21
 
 # Install IntelliJ Community
 RUN set -ex && \
-        wget https://download-cf.jetbrains.com/idea/ideaIC-2020.3.1-no-jbr.tar.gz && \
-        tar -xf ideaIC-2020.3.1-no-jbr.tar.gz && \
-        rm ideaIC-2020.3.1-no-jbr.tar.gz
+        wget https://download-cf.jetbrains.com/idea/ideaIC-2025.2.tar.gz && \
+        tar -xf ideaIC-2025.2.tar.gz && \
+        rm ideaIC-2025.2.tar.gz
 
 # Create a new user with no password
 ENV USERNAME developer
@@ -52,6 +52,6 @@ RUN set -ex && \
 	date
 
 # Set additional environment variables
-ENV JAVA_HOME /usr/lib/jvm/java-1.8-openjdk
-ENV JDK_HOME  /usr/lib/jvm/java-1.8-openjdk
-ENV JAVA_EXE  /usr/lib/jvm/java-1.8-openjdk/bin/java
+ENV JAVA_HOME /usr/lib/jvm/java-21-openjdk
+ENV JDK_HOME  /usr/lib/jvm/java-21-openjdk
+ENV JAVA_EXE  /usr/lib/jvm/java-21-openjdk/bin/java

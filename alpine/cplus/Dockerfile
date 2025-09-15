@@ -5,7 +5,7 @@
 # - For exposing all ports, add '--network="host'.
 #
 
-FROM alpine:3.19
+FROM alpine:3.22
 
 # Build tools
 RUN apk --no-cache add cmake g++ linux-headers make
