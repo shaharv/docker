@@ -31,18 +31,6 @@ RUN set -ex && \
 	# Java tools
 		gradle openjdk21
 
-# Install IntelliJ Community
-RUN set -ex && \
-        wget https://download-cf.jetbrains.com/idea/ideaIC-2025.2.tar.gz && \
-        tar -xf ideaIC-2025.2.tar.gz && \
-        rm ideaIC-2025.2.tar.gz
-
-# Create a new user with no password
-ENV USERNAME developer
-RUN set -ex && \
-	useradd --create-home --key MAIL_DIR=/dev/null --shell /bin/bash $USERNAME && \
-	passwd -d $USERNAME
-
 # Set timezone (default = UTC)
 ENV TZ US/Eastern
 RUN set -ex && \
@@ -51,8 +39,26 @@ RUN set -ex && \
 	echo "$TZ" > /etc/timezone && \
 	date
 
+# Create a new user with no password
+ENV USERNAME developer
+RUN set -ex && \
+	useradd --create-home --key MAIL_DIR=/dev/null --shell /bin/bash $USERNAME && \
+	passwd -d $USERNAME
+
+# Install IntelliJ Community.
+# Use Alpine Java from package instead of the bundled glibc-compatible Java.
+# Setting IDEA_JDK alone isn't enough for IntelliJ to complete the startup process.
+RUN set -ex && \
+	wget https://download-cf.jetbrains.com/idea/ideaIC-2025.2.tar.gz && \
+	tar -xf ideaIC-2025.2.tar.gz && \
+	rm ideaIC-2025.2.tar.gz
+RUN mv /idea-IC-252.23892.409/jbr /idea-IC-252.23892.409/jbr_old
+RUN ln -s /usr/lib/jvm/java-21-openjdk /idea-IC-252.23892.409/jbr
+RUN chown -R developer /idea-IC-252.23892.409
+
+USER developer
+
 # Set additional environment variables
 ENV JAVA_HOME /usr/lib/jvm/java-21-openjdk
 ENV JDK_HOME  /usr/lib/jvm/java-21-openjdk
-ENV JAVA_EXE  /usr/lib/jvm/java-21-openjdk/bin/java
-ENV IDEA_JDK  /usr/lib/jvm/java-21-openjdk/bin/java
+ENV IDEA_JDK  /usr/lib/jvm/java-21-openjdk
