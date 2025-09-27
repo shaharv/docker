@@ -55,3 +55,4 @@ RUN set -ex && \
 ENV JAVA_HOME /usr/lib/jvm/java-21-openjdk
 ENV JDK_HOME  /usr/lib/jvm/java-21-openjdk
 ENV JAVA_EXE  /usr/lib/jvm/java-21-openjdk/bin/java
+ENV IDEA_JDK  /usr/lib/jvm/java-21-openjdk/bin/java
