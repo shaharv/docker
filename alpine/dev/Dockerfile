@@ -8,8 +8,8 @@
 
 FROM alpine:3.22
 
-ENV IDEA_VER 2025.2.2
-ENV IDEA_BUILD 252.26199.169
+ENV IDEA_VER 2025.1.6
+ENV IDEA_BUILD 251.28774.11
 
 RUN set -ex && \
 	apk --no-cache --update add \
