@@ -4,7 +4,7 @@
 # $ XSOCK=/tmp/.X11-unix && sudo docker run -i -v $XSOCK:$XSOCK -e DISPLAY -u developer -t [image-name]
 #
 # Then run IntelliJ with:
-# /idea-IC-${IDEA_BUILD}/bin/idea.sh
+# LD_PRELOAD=/usr/lib/libjemalloc.so.2 /idea-IC-251.28774.11/bin/idea.sh
 
 FROM alpine:3.22
 
