@@ -33,10 +33,6 @@ RUN set -ex && \
 RUN set -ex && \
 	apk --no-cache --update add gradle openjdk21
 
-# Install jemalloc for Idea in order to avoid malloc_trim error on startup
-RUN set -ex && \
-        apk --no-cache --update add jemalloc
-
 # Set timezone (default = UTC)
 ENV TZ US/Eastern
 RUN set -ex && \
@@ -65,6 +61,12 @@ RUN mv /idea-IC-${IDEA_BUILD}/jbr /idea-IC-${IDEA_BUILD}/jbr_old
 RUN ln -s /usr/lib/jvm/java-21-openjdk /idea-IC-${IDEA_BUILD}/jbr
 RUN chown -R developer /idea-IC-${IDEA_BUILD}
 
+# Install extra packages for Idea on Alpine:
+# - libc6-compat for installing a /lib/ld-linux-x86-64.so.2 symlink that is picked by fsnotifier
+# - jemalloc for avoiding malloc_trim not found error
+RUN set -ex && \
+        apk --no-cache --update add libc6-compat jemalloc
+
 USER developer
 
 # Set environment variables
@@ -72,3 +74,5 @@ ENV LD_PRELOAD /usr/lib/libjemalloc.so.2
 ENV JAVA_HOME  /usr/lib/jvm/java-21-openjdk
 ENV JDK_HOME   /usr/lib/jvm/java-21-openjdk
 ENV IDEA_JDK   /usr/lib/jvm/java-21-openjdk
+
+ENTRYPOINT /bin/bash
