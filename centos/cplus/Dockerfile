@@ -17,6 +17,8 @@ RUN yum install -y make openssl-devel python3 wget tar xz
 RUN wget https://github.com/Kitware/CMake/releases/download/v3.31.9/cmake-3.31.9.tar.gz && \
     tar -xf cmake-3.31.9.tar.gz && \
     scl enable devtoolset-11 "cd /cmake-3.31.9 && ./bootstrap --parallel=$(nproc --all)"
+RUN scl enable devtoolset-11 "cd /cmake-3.31.9 && make -j4 install"
+RUN cmake --version
 
 # Print the glibc version
 RUN getconf GNU_LIBPTHREAD_VERSION
