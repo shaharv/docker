@@ -23,6 +23,7 @@ RUN ln -sf /opt/openssl/lib64/libssl.so.3 /usr/lib64/libssl.so && \
     ln -sf /opt/openssl/lib64/libssl.so.3 /usr/lib64/libssl.so.3 && \
     ln -sf /opt/openssl/lib64/libcrypto.so.3 /usr/lib64/libcrypto.so.3 && \
     ln -sf /opt/openssl/lib/libssl.so.3 /usr/lib/libssl.so.3 && \
+    ln -sf /opt/openssl/lib/libssl.so.3 /usr/lib/libssl.so && \
     ln -sf /opt/openssl/lib/libcrypto.so.3 /usr/lib/libcrypto.so.3 && \
     ln -sf /opt/openssl/lib64 /opt/openssl/lib
 
@@ -37,7 +38,9 @@ RUN wget https://www.python.org/ftp/python/3.14.0/Python-3.14.0.tar.xz && \
         PKG_CONFIG_PATH=/opt/openssl/lib64/pkgconfig \
         ./configure --prefix=/opt/python/3.14.0 --with-openssl=/opt/openssl --enable-optimizations && \
         make -j4 && \
-        make altinstall || true"
+        make altinstall"
+RUN ln -sf /opt/python/3.14.0/bin/python3.14 /usr/bin/python3 && \
+    ln -sf /opt/python/3.14.0/bin/python3.14 /usr/bin/python
 RUN python --version
 
 # Build and install CMake from source
