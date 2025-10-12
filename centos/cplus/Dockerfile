@@ -11,7 +11,7 @@ RUN yum install -y oracle-softwarecollection-release-el7
 RUN yum install -y devtoolset-11-gcc devtoolset-11-gcc-c++
 
 # Install build tools and libraries
-RUN yum install -y bzip2-devel libffi-devel make openssl-devel perl-core tar wget xz zlib-devel
+RUN yum install -y bzip2-devel libffi-devel make perl-core tar wget xz zlib-devel
 
 # Build and install OpenSSL from source (recent version required for Python build)
 RUN wget https://github.com/openssl/openssl/archive/refs/tags/openssl-3.6.0.tar.gz && \
