@@ -42,11 +42,12 @@ RUN wget https://www.python.org/ftp/python/3.14.0/Python-3.14.0.tar.xz && \
 RUN ln -sf /opt/python/3.14.0/bin/python3.14 /usr/bin/python3 && \
     ln -sf /opt/python/3.14.0/bin/python3.14 /usr/bin/python
 RUN python --version
+RUN python -c "import ssl; print(ssl.OPENSSL_VERSION)"
 
 # Build and install CMake from source
 RUN wget https://github.com/Kitware/CMake/releases/download/v3.31.9/cmake-3.31.9.tar.gz && \
-    tar -xf cmake-3.31.9.tar.gz && \
-    scl enable devtoolset-11 "cd /cmake-3.31.9 && ./bootstrap --parallel=$(nproc --all)"
+    tar -xf cmake-3.31.9.tar.gz
+RUN scl enable devtoolset-11 "cd /cmake-3.31.9 && ./bootstrap --parallel=$(nproc --all) -- -DOPENSSL_ROOT_DIR=/opt/openssl"
 RUN scl enable devtoolset-11 "cd /cmake-3.31.9 && make -j4 install"
 RUN cmake --version
 
