@@ -1,6 +1,7 @@
 # Oracle Linux 7.9 C++ build docker image with GCC 11, LLVM 20, Python 3.14, CMake 3.31
-# and OpenSSL 3.6.0. Based on glibc 2.17.
+# and OpenSSL 3.6.0. Based on glibc 2.17. The final image size is 6GB.
 # Enable gcc by running the command: scl enable devtoolset-11 bash
+# Enable debugging in lldb: settings set target.disable-aslr false
 
 FROM oraclelinux:7.9 AS builder
 
@@ -70,6 +71,20 @@ RUN clang --version
 RUN clang-tidy --version
 RUN clang-format --version
 RUN lldb --version
+
+# Restore python2 as the default python for yum to work
+RUN ln -sf /usr/bin/python2 /usr/bin/python
+RUN python --version
+
+# Install extra utilities
+RUN yum install -y file tree
+
+# Copy the files to the final image
+FROM oraclelinux:7.9
+COPY --from=builder /etc /etc
+COPY --from=builder /opt /opt
+COPY --from=builder /usr /usr
+COPY --from=builder /var /var
 
 # Print the glibc version
 RUN getconf GNU_LIBPTHREAD_VERSION
