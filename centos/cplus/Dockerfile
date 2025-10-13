@@ -57,7 +57,7 @@ RUN wget https://github.com/llvm/llvm-project/archive/refs/tags/llvmorg-20.1.0.t
     tar -xf llvmorg-20.1.0.tar.gz
 RUN cd /llvm-project-llvmorg-20.1.0 && \
     scl enable devtoolset-11 "cmake -S llvm -B build -G 'Unix Makefiles' -DCMAKE_BUILD_TYPE=Release \
-                              -DLLVM_ENABLE_PROJECTS='clang;clang-tools-extra;lldb;lld'
+                              -DLLVM_ENABLE_PROJECTS='clang;clang-tools-extra;lldb;lld' \
                               -DCMAKE_INSTALL_PREFIX=/opt/llvm20 -DLLVM_TARGETS_TO_BUILD=X86"
 RUN scl enable devtoolset-11 "cd /llvm-project-llvmorg-20.1.0/build && make -j4"
 RUN scl enable devtoolset-11 "cd /llvm-project-llvmorg-20.1.0/build && make install"
@@ -69,7 +69,6 @@ RUN ln -sf /opt/llvm20/bin/clang        /usr/bin/clang && \
 RUN clang --version
 RUN clang-tidy --version
 RUN clang-format --version
-RUN lld --version
 RUN lldb --version
 
 # Print the glibc version
