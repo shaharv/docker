@@ -63,6 +63,7 @@ RUN cd /llvm-project-llvmorg-20.1.0 && \
 RUN scl enable devtoolset-11 "cd /llvm-project-llvmorg-20.1.0/build && make -j4"
 RUN scl enable devtoolset-11 "cd /llvm-project-llvmorg-20.1.0/build && make install"
 RUN ln -sf /opt/llvm20/bin/clang        /usr/bin/clang && \
+    ln -sf /opt/llvm20/bin/clang++      /usr/bin/clang++ && \
     ln -sf /opt/llvm20/bin/clang-tidy   /usr/bin/clang-tidy && \
     ln -sf /opt/llvm20/bin/clang-format /usr/bin/clang-format && \
     ln -sf /opt/llvm20/bin/ld.lld       /usr/bin/lld && \
