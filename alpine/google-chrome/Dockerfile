@@ -1,5 +1,6 @@
 # For starting the image:
-# sudo docker run -it --network=host -v $XSOCK:/tmp/.X11-unix -v $XAUTHORITY:/root/.Xauthority -e DISPLAY [image-name]
+# XSOCK=/tmp/.X11-unix
+# podman run -it --network=host -v $XSOCK:/tmp/.X11-unix -e DISPLAY [image-name] --no-sandbox
 #
 # Debug:
 # - Add '--cap-add=SYS_PTRACE --security-opt seccomp=unconfined' for gdb and strace.
@@ -9,30 +10,27 @@
 #   $info file
 #   b *<entry point>
 #
-# Note: Running glibc-based Chrome on Alpine has known compatibility issues
-# due to Alpine's musl-compiled dependencies conflicting with glibc runtime.
-
 FROM alpine:3.23
 
-# Set up glibc
+# Set up Alpine's glibc compatibility layer. Use gcompat as the loader so the
+# Chrome binary and Alpine's musl-built dependencies stay on the same libc side.
 ENV LANG=en_US.UTF-8
 ENV LANGUAGE=en_US:en
 ENV LC_ALL=en_US.UTF-8
-ENV GLIBC_REPO=https://github.com/sgerrand/alpine-pkg-glibc
-ENV GLIBC_VERSION=2.35-r1
 RUN set -ex && \
-    apk --update add libstdc++ curl ca-certificates && \
-    for pkg in glibc-${GLIBC_VERSION} glibc-bin-${GLIBC_VERSION}; \
-        do curl -sSL ${GLIBC_REPO}/releases/download/${GLIBC_VERSION}/${pkg}.apk -o /tmp/${pkg}.apk; done && \
-    apk add --allow-untrusted --force-overwrite /tmp/*.apk && \
-    rm -v /tmp/*.apk && \
-    mkdir -p /lib64 && \
-    ln -sf /usr/glibc-compat/lib/ld-linux-x86-64.so.2 /lib64/ld-linux-x86-64.so.2 && \
-    /usr/glibc-compat/sbin/ldconfig /lib /usr/glibc-compat/lib
+    apk --no-cache add ca-certificates curl gcompat libstdc++
+
+COPY chrome-glibc-shim.c /tmp/chrome-glibc-shim.c
+RUN set -ex && \
+	apk add --no-cache --virtual .build-deps gcc musl-dev && \
+	gcc -shared -fPIC -O2 -o /usr/local/lib/chrome-glibc-shim.so /tmp/chrome-glibc-shim.c && \
+	apk del .build-deps && \
+	rm /tmp/chrome-glibc-shim.c
 
 # Install prerequisites and helper packages
 RUN apk add --no-cache \
-	bash dpkg xeyes
+	bash dpkg font-noto xeyes
+RUN printf '0123456789abcdef0123456789abcdef\n' > /etc/machine-id
 
 # Download and unpack Chrome
 RUN set -ex && \
@@ -43,6 +41,13 @@ RUN set -ex && \
 	mv /google-chrome-stable/etc/* /etc && \
 	mv /google-chrome-stable/opt/* /opt && \
 	rm -r /google-chrome-stable /google-chrome-stable_current_amd64.deb
+
+RUN set -ex && \
+	apk add --no-cache --virtual .patch-deps patchelf && \
+	cp /usr/local/lib/chrome-glibc-shim.so /opt/google/chrome/libchrome-glibc-shim.so && \
+	patchelf --add-needed /opt/google/chrome/libchrome-glibc-shim.so /opt/google/chrome/chrome && \
+	patchelf --add-needed /opt/google/chrome/libchrome-glibc-shim.so /opt/google/chrome/chrome_crashpad_handler && \
+	apk del .patch-deps
 
 # Install Chrome dependencies (updated package names for Alpine 3.23)
 RUN apk add --no-cache --force-overwrite \
@@ -66,3 +71,9 @@ RUN apk add --no-cache --force-overwrite \
 	mesa-gbm \
 	nss \
 	pango
+
+RUN set -ex && \
+	adduser -D -s /bin/sh chrome
+
+USER chrome
+WORKDIR /home/chrome
