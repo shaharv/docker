@@ -1,6 +1,6 @@
-# For starting the image:
-# XSOCK=/tmp/.X11-unix
-# podman run -it --network=host -v $XSOCK:/tmp/.X11-unix -e DISPLAY [image-name] --no-sandbox
+# For running the image:
+# XSOCK=/tmp/.X11-unix podman run -it --network=host -v $XSOCK:/tmp/.X11-unix -e DISPLAY alpine-google-chrome:3.23 /opt/google/chrome/chrome --no-sandbox
+
 #
 # Debug:
 # - Add '--cap-add=SYS_PTRACE --security-opt seccomp=unconfined' for gdb and strace.
